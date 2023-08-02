@@ -1,0 +1,15 @@
+{
+    "name": "efrog",
+    "version": "1.0.1",
+    "description": "",
+    "main": "index.js",
+    "types": "index.d.ts",
+    "repository": {
+    "type": "git",
+    "url": "git+https://github.com/efrog-team/efrog-npm.git"
+    },
+    "author": "efrog",
+    "license": "MIT",
+    "homepage": "https://github.com/efrog-team/efrog-npm",
+    "readme": "README.md"
+}
