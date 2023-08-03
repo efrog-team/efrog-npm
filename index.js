@@ -1,43 +1,44 @@
 const fs = require('fs');
-const fd = (process.platform === 'win32') ? process.stdin.fd : fs.openSync('/dev/tty', 'rs');
+const stdin_fd = (process.platform === 'win32') ? process.stdin.fd : fs.openSync('/dev/stdin', 'rs');
+const stdout_fd = process.stdout.fd;
 const basicEnd = (process.platform === 'win32') ? '\r\n' : '\n';
 const StringDecoder = require('string_decoder').StringDecoder;
 const decoder = new StringDecoder('utf8');
 
 class Console {
     static write(text, end = "") {
-        fs.writeSync(process.stdout.fd, text.toString() + end);
+        fs.writeSync(stdout_fd, text.toString() + end);
     }
 
     static output(text, end = "") {
-        write(text, end);
+        this.write(text, end);
     }
 
     static writeWord(text, end = " ") {
-        write(text, end);
+        this.write(text, end);
     }
 
     static outputWord(text, end = "") {
-        writeWord(text, end);
+        this.writeWord(text, end);
     }
 
     static writeLine(text) {
-        write(text, basicEnd);
+        this.write(text, basicEnd);
     }
 
     static outputLine(text) {
-        writeLine(text);
+        this.writeLine(text);
     }
 
     static alert(msg) {
-        writeLine(msg);
+        this.writeLine(msg);
     }
 
     static readCharCode() {
         const buf = new Buffer.alloc(1, 0, 'utf8');
         let bytesRead = 0;
         try {
-            bytesRead = fs.readSync(fd, buf, 0, 1);
+            bytesRead = fs.readSync(stdin_fd, buf, 0, 1);
         }
         catch(error) {
             return -1;
@@ -49,11 +50,11 @@ class Console {
     }
 
     static inputCharCode() {
-        return readCharCode();
+        return this.readCharCode();
     }
 
     static readChar() {
-        const c = readCharCode();
+        const c = this.readCharCode();
         if (c == -1) {
             throw new Error('Is not possible to read a char, probably EOF');
         }
@@ -63,66 +64,66 @@ class Console {
     }
 
     static inputChar() {
-        return readChar();
+        return this.readChar();
     }
 
     static read(end = ` ${basicEnd}`) {
         let s = "", char, c;
-        while ((c = readCharCode()) != -1 && end.indexOf(char = String.fromCharCode(c)) != -1);
+        while ((c = this.readCharCode()) != -1 && end.indexOf(char = String.fromCharCode(c)) != -1);
         if (c != -1) s = char;
-        while ((c = readCharCode()) != -1 && end.indexOf(char = String.fromCharCode(c)) == -1) {
+        while ((c = this.readCharCode()) != -1 && end.indexOf(char = String.fromCharCode(c)) == -1) {
             s += char;
         }
         return s;
     }
 
     static input(end = ` ${basicEnd}`) {
-        return read(end);
+        return this.read(end);
     }
 
     static readWord(end = ` ${basicEnd}`) {
-        return read(end);
+        return this.read(end);
     }
 
     static inputWord(end = ` ${basicEnd}`) {
-        return readWord(end);
+        return this.readWord(end);
     }
 
     static readLine() {
-        return read(basicEnd);
+        return this.read(basicEnd);
     }
 
     static inputLine() {
-        return readLine();
+        return this.readLine();
     }
 
     static readLineSplit(sep) {
-        return read(basicEnd).split(sep).filter(x => x != ""); 
+        return this.read(basicEnd).split(sep).filter(x => x != ""); 
     }
 
     static inputLineSplit(sep) {
-        return readLineSplit(sep);
+        return this.readLineSplit(sep);
     }
 
     static readLineSplitWords(sep = " ") {
-        return read(basicEnd).split(sep).filter(x => x != ""); 
+        return this.read(basicEnd).split(sep).filter(x => x != ""); 
     }
 
     static inputLineSplitWords(sep = " ") {
-        return readLineSplitWords(sep);
+        return this.readLineSplitWords(sep);
     }
 
     static readAll() {
-        return read("");
+        return this.read("");
     }
 
     static inputAll() {
-        return read();
+        return this.read();
     }
 
     static prompt(msg) {
-        write(msg);
-        return readLine();
+        this.write(msg);
+        return this.readLine();
     }
 }
 

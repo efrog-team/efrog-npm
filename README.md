@@ -62,7 +62,7 @@ const Console = require('efrog').Console;
 
 * **`Console.readAll()`** | **`Console.inputAll()`** — читання усьогу потоку з консолі
 
-* **`prompt(msg)`** — читання з консолі після вивіду у консоль повідомлення
+* **`Console.prompt(msg)`** — читання з консолі після вивіду у консоль повідомлення
 
     `msg` — повідомлення, яке буде виводитися у консоль
 
@@ -128,6 +128,6 @@ const Console = require('efrog').Console;
 
 * **`Console.readAll()`** | **`Console.inputAll()`** — reading the entire stream from the console
 
-* **`prompt(msg)`** — reading from the console after outputting a message to the console
+* **`Console.prompt(msg)`** — reading from the console after outputting a message to the console
 
     `msg` — the message that will be output to the console
