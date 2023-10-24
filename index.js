@@ -118,7 +118,7 @@ class Console {
     }
 
     static inputAll() {
-        return this.read();
+        return this.read("");
     }
 
     static prompt(msg) {
