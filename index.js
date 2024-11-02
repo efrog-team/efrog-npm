@@ -121,7 +121,7 @@ class Console {
         return this.read("");
     }
 
-    static prompt(msg) {
+    static prompt(msg = "") {
         this.write(msg);
         return this.readLine();
     }
